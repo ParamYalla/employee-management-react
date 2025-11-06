@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
+
+const BASE_URL = "https://employee-management-django-v61v.onrender.com";
 
 function Login() {
   const [loginForm, setLoginForm] = useState({
@@ -19,18 +21,22 @@ function Login() {
   const login = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/login/", {
+      .post(`${BASE_URL}/login/`, {
         email: loginForm.email,
         password: loginForm.password,
       })
       .then((response) => {
-        if (response.data) {
+        // Assuming Django sends { success: true } or a token
+        if (response.data.success || response.data.token) {
           navigate("/dashboard");
         } else {
           alert("Invalid Credentials");
         }
       })
-      .catch(() => alert("Something went wrong"));
+      .catch((err) => {
+        console.error(err);
+        alert("Something went wrong while logging in!");
+      });
   };
 
   return (
@@ -43,9 +49,7 @@ function Login() {
         <form onSubmit={login} className="space-y-5">
           {/* Email Field */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-medium mb-1">
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
               Email Address
             </label>
             <input
@@ -62,9 +66,7 @@ function Login() {
 
           {/* Password Field */}
           <div>
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-medium mb-1">
+            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
               Password
             </label>
             <input
@@ -82,17 +84,20 @@ function Login() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300">
+            className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300"
+          >
             Login
           </button>
         </form>
 
         <p className="text-center text-gray-500 text-sm mt-6">
           Don’t have an account?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
+          <Link to={"/register"} className="text-blue-600 hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
+
+        <Footer />
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ function About() {
             that empowers businesses worldwide.
           </p>
           <p className="text-lg leading-relaxed font-medium">
-            Founded in 2020, our mission has always been to simplify management
+            Founded in 2025, our mission has always been to simplify management
             processes by integrating technology and intuitive design. Our
             commitment to excellence and customer satisfaction sets us apart in
             the industry.

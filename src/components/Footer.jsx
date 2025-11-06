@@ -1,4 +1,5 @@
-
+import React from 'react'
+import { Link } from 'react-router-dom'
 function Footer() {
   return (
     <div>
@@ -12,22 +13,22 @@ function Footer() {
 
         {/* Center - Links */}
         <div className="flex space-x-6 mb-4 md:mb-0">
-          <a href="/about" className="hover:text-red-600 transition">About</a>
-          <a href="/welcome" className="hover:text-white transition">Menu</a>
-          <a href="/contact" className="hover:text-white transition">Contact</a>
+          <Link to={'/about'} className="hover:text-red-600 transition">About</Link>
+          <Link to={'/welcome'} className="hover:text-white transition">Menu</Link>
+          <Link to={'/contact'} className="hover:text-white transition">Contact</Link>
         </div>
 
         {/* Right - Social Icons */}
         <div className="flex space-x-4">
-          <a href="" className="hover:text-white transition">
+          <Link to="" className="hover:text-white transition">
             <i className="fab fa-facebook-f"></i>
-          </a>
-          <a href="" className="hover:text-white transition">
+          </Link>
+          <Link to="" className="hover:text-white transition">
             <i className="fab fa-instagram"></i>
-          </a>
-          <a href="" className="hover:text-white transition">
+          </Link>
+          <Link to="" className="hover:text-white transition">
             <i className="fab fa-twitter"></i>
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

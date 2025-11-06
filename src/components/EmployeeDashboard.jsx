@@ -4,6 +4,8 @@ import Welcome from "./Welcome";
 import WelcomeMenu from "./WelcomeMenu";
 import Footer from "./Footer";
 
+const BASE_URL = "https://employee-management-django-v61v.onrender.com";
+
 function EmployeeDashboard() {
   const [employees, setEmployees] = useState([]);
   const [editingEmp, setEditingEmp] = useState(null);
@@ -16,15 +18,15 @@ function EmployeeDashboard() {
 
   const fetchEmployees = () => {
     axios
-      .get("http://localhost:8080/getAll/")
+      .get(`${BASE_URL}/getAll/`)
       .then((response) => setEmployees(response.data))
-      .catch(() => console.log("Something went wrong"));
+      .catch(() => console.log("Something went wrong while fetching employees"));
   };
 
   const deleteemployee = (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       axios
-        .delete(`http://localhost:8080/delete/${id}/`)
+        .delete(`${BASE_URL}/delete/${id}/`)
         .then(() => {
           alert("Employee deleted successfully");
           setEmployees((old) => old.filter((emp) => emp.id !== id));
@@ -40,30 +42,34 @@ function EmployeeDashboard() {
 
   const updateEmployee = () => {
     axios
-      .put(`http://localhost:8080/update/${editingEmp}/`, form)
+      .put(`${BASE_URL}/update/${editingEmp}/`, form)
       .then(() => {
         setEmployees((old) =>
           old.map((e) => (e.id === editingEmp ? { ...e, ...form } : e))
         );
         setEditingEmp(null);
         setForm({ name: "", email: "", password: "" });
+        alert("Employee updated successfully!");
       })
       .catch(() => alert("Failed to update employee"));
   };
 
   const addEmployee = () => {
     axios
-      .post("http://localhost:8080/register/", form)
+      .post(`${BASE_URL}/register/`, form)
       .then((response) => {
-        if (response.data.success) {
-          fetchEmployees(); // refresh list
+        if (response.data.success || response.status === 200) {
+          alert("Employee added successfully!");
+          fetchEmployees(); // Refresh list
           setIsAdding(false);
           setForm({ name: "", email: "", password: "" });
+        } else {
+          alert("Failed to add employee. Please try again.");
         }
       })
       .catch(() =>
         alert(
-          "Failed to add employee. Please try again by entering valid details"
+          "Failed to add employee. Please try again by entering valid details."
         )
       );
   };
@@ -94,7 +100,8 @@ function EmployeeDashboard() {
                   employees.map((emp, index) => (
                     <tr
                       key={index}
-                      className="hover:bg-indigo-50 transition-all duration-200">
+                      className="hover:bg-indigo-50 transition-all duration-200"
+                    >
                       <td className="py-3 px-4 text-gray-700">{index + 1}</td>
                       <td className="py-3 px-4 text-gray-700">{emp.id}</td>
                       <td className="py-3 px-4 font-semibold text-gray-800">
@@ -107,12 +114,14 @@ function EmployeeDashboard() {
                       <td className="py-3 px-4 flex justify-center gap-3">
                         <button
                           onClick={() => startEdit(emp)}
-                          className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200">
+                          className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200"
+                        >
                           Edit
                         </button>
                         <button
                           onClick={() => deleteemployee(emp.id)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200">
+                          className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200"
+                        >
                           Delete
                         </button>
                       </td>
@@ -122,7 +131,8 @@ function EmployeeDashboard() {
                   <tr>
                     <td
                       colSpan="6"
-                      className="text-center py-8 text-gray-500 italic">
+                      className="text-center py-8 text-gray-500 italic"
+                    >
                       No employees found 😔
                     </td>
                   </tr>
@@ -135,7 +145,8 @@ function EmployeeDashboard() {
           <div className="text-center mt-8">
             <button
               onClick={() => setIsAdding(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow-md transition-all duration-200">
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow-md transition-all duration-200"
+            >
               Add New Employee
             </button>
           </div>
@@ -148,6 +159,7 @@ function EmployeeDashboard() {
               <h2 className="text-xl font-bold mb-4">
                 {isAdding ? "Add New Employee" : "Edit Employee"}
               </h2>
+
               <label htmlFor="name">Name</label>
               <input
                 type="text"
@@ -156,6 +168,7 @@ function EmployeeDashboard() {
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full mb-3 p-2 border rounded"
               />
+
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -165,6 +178,7 @@ function EmployeeDashboard() {
                 className="w-full mb-3 p-2 border rounded"
                 required
               />
+
               <label htmlFor="password">Password</label>
               <input
                 type="text"
@@ -173,6 +187,7 @@ function EmployeeDashboard() {
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 className="w-full mb-3 p-2 border rounded"
               />
+
               <div className="flex justify-end gap-2">
                 <button
                   onClick={() => {
@@ -180,12 +195,15 @@ function EmployeeDashboard() {
                     setIsAdding(false);
                     setForm({ name: "", email: "", password: "" });
                   }}
-                  className="bg-gray-400 text-white px-3 py-1 rounded">
+                  className="bg-gray-400 text-white px-3 py-1 rounded"
+                >
                   Cancel
                 </button>
+
                 <button
                   onClick={isAdding ? addEmployee : updateEmployee}
-                  className="bg-blue-600 text-white px-3 py-1 rounded">
+                  className="bg-blue-600 text-white px-3 py-1 rounded"
+                >
                   {isAdding ? "Add" : "Update"}
                 </button>
               </div>
@@ -193,7 +211,7 @@ function EmployeeDashboard() {
           </div>
         )}
       </div>
-        <Footer />
+      <Footer />
     </div>
   );
 }

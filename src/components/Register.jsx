@@ -1,5 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+const BASE_URL = "https://employee-management-django-v61v.onrender.com";
 
 function Register() {
   const [employee, setEmployee] = useState({
@@ -15,23 +18,16 @@ function Register() {
 
   const register = (e) => {
     e.preventDefault();
-
     axios
-      .post("http://localhost:8080/register/", {
-        name: employee.name,
-        email: employee.email,
-        password: employee.password,
+      .post(`${BASE_URL}/register/`, employee)
+      .then(() => {
+        alert("Registered successfully!");
+        reset();
       })
-      .then((response) => {
-        if (response.data) {
-          alert("Registerd");
-        } else {
-          alert("Already Exist");
-        }
-      })
-      .catch((error) => alert(error.message || "Something went wrong"));
-
-    reset();
+      .catch((error) => {
+        console.error(error);
+        alert("Failed to register. Please try again.");
+      });
   };
 
   const reset = () => {
@@ -46,12 +42,12 @@ function Register() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ">
       <form
         onSubmit={register}
-        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md"
+      >
         <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
           Register
         </h2>
 
-        {/* Name Field */}
         <div className="mb-4">
           <label className="block text-gray-600 font-medium mb-2">Name</label>
           <input
@@ -61,10 +57,10 @@ function Register() {
             onChange={inputHandler}
             placeholder="Enter your name"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            required
           />
         </div>
 
-        {/* Email Field */}
         <div className="mb-4">
           <label className="block text-gray-600 font-medium mb-2">Email</label>
           <input
@@ -74,10 +70,10 @@ function Register() {
             onChange={inputHandler}
             placeholder="Enter your email"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            required
           />
         </div>
 
-        {/* Password Field */}
         <div className="mb-6">
           <label className="block text-gray-600 font-medium mb-2">
             Password
@@ -89,21 +85,22 @@ function Register() {
             onChange={inputHandler}
             placeholder="Enter your password"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            required
           />
         </div>
 
-        {/* Register Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition-all duration-300">
+          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition-all duration-300"
+        >
           Register
         </button>
 
         <p className="text-center text-gray-500 text-sm mt-6">
-          Have an account? Login{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Sign up
-          </a>
+          Have an account?{" "}
+          <Link to={"/login"} className="text-blue-600 hover:underline">
+            Login
+          </Link>
         </p>
       </form>
     </div>
