@@ -49,7 +49,9 @@ function Login() {
         <form onSubmit={login} className="space-y-5">
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-1">
               Email Address
             </label>
             <input
@@ -66,7 +68,9 @@ function Login() {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-1">
               Password
             </label>
             <input
@@ -84,8 +88,7 @@ function Login() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300"
-          >
+            className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300">
             Login
           </button>
         </form>

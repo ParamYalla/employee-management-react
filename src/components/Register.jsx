@@ -42,8 +42,7 @@ function Register() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ">
       <form
         onSubmit={register}
-        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md"
-      >
+        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
           Register
         </h2>
@@ -91,8 +90,7 @@ function Register() {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition-all duration-300"
-        >
+          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition-all duration-300">
           Register
         </button>
 

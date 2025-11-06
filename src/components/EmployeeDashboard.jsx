@@ -20,7 +20,9 @@ function EmployeeDashboard() {
     axios
       .get(`${BASE_URL}/getAll/`)
       .then((response) => setEmployees(response.data))
-      .catch(() => console.log("Something went wrong while fetching employees"));
+      .catch(() =>
+        console.log("Something went wrong while fetching employees")
+      );
   };
 
   const deleteemployee = (id) => {
@@ -100,8 +102,7 @@ function EmployeeDashboard() {
                   employees.map((emp, index) => (
                     <tr
                       key={index}
-                      className="hover:bg-indigo-50 transition-all duration-200"
-                    >
+                      className="hover:bg-indigo-50 transition-all duration-200">
                       <td className="py-3 px-4 text-gray-700">{index + 1}</td>
                       <td className="py-3 px-4 text-gray-700">{emp.id}</td>
                       <td className="py-3 px-4 font-semibold text-gray-800">
@@ -114,14 +115,12 @@ function EmployeeDashboard() {
                       <td className="py-3 px-4 flex justify-center gap-3">
                         <button
                           onClick={() => startEdit(emp)}
-                          className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200"
-                        >
+                          className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200">
                           Edit
                         </button>
                         <button
                           onClick={() => deleteemployee(emp.id)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200"
-                        >
+                          className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg text-sm shadow-md transition-all duration-200">
                           Delete
                         </button>
                       </td>
@@ -131,8 +130,7 @@ function EmployeeDashboard() {
                   <tr>
                     <td
                       colSpan="6"
-                      className="text-center py-8 text-gray-500 italic"
-                    >
+                      className="text-center py-8 text-gray-500 italic">
                       No employees found 😔
                     </td>
                   </tr>
@@ -145,8 +143,7 @@ function EmployeeDashboard() {
           <div className="text-center mt-8">
             <button
               onClick={() => setIsAdding(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow-md transition-all duration-200"
-            >
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow-md transition-all duration-200">
               Add New Employee
             </button>
           </div>
@@ -195,15 +192,13 @@ function EmployeeDashboard() {
                     setIsAdding(false);
                     setForm({ name: "", email: "", password: "" });
                   }}
-                  className="bg-gray-400 text-white px-3 py-1 rounded"
-                >
+                  className="bg-gray-400 text-white px-3 py-1 rounded">
                   Cancel
                 </button>
 
                 <button
                   onClick={isAdding ? addEmployee : updateEmployee}
-                  className="bg-blue-600 text-white px-3 py-1 rounded"
-                >
+                  className="bg-blue-600 text-white px-3 py-1 rounded">
                   {isAdding ? "Add" : "Update"}
                 </button>
               </div>
